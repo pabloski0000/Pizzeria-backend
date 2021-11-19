@@ -2,20 +2,27 @@ package com.pizzeria.pizzeria.core;
 
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.MappedSuperclass;
 
-import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.domain.Persistable;
+import org.springframework.data.relational.core.mapping.Column;
 
 import lombok.Getter;
 import lombok.Setter;
 
-public @Getter @Setter abstract class EntityBase {
+@MappedSuperclass
+public @Getter @Setter abstract class EntityBase implements Persistable<UUID> {
     @Id
-    @Type(type = "uuid-binary")
-    @Column(columnDefinition = "binary(16)")
+    @Column
     private UUID id;
+    @Transient
+    private boolean isThisNew = false;
+    @Override
+    public boolean isNew(){
+        return this.isThisNew;
+    }
     @Override
     public boolean equals (Object obj) {
 

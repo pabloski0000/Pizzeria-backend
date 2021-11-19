@@ -2,29 +2,41 @@ package com.pizzeria.pizzeria.infrastructure.ingredient;
 
 import java.util.UUID;
 
-import com.pizzeria.pizzeria.domain.ingredient.IngredientModel;
-import com.pizzeria.pizzeria.domain.ingredient.IngredientRepository;
+import com.pizzeria.pizzeria.domain.ingredientDomain.Ingredient;
+import com.pizzeria.pizzeria.domain.ingredientDomain.IngredientRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.repository.reactive.ReactiveCrudRepository;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
 public class IngredientRepositoryImpl implements IngredientRepository {
-    @Autowired
-    private final IngredientR2dbcRepository ingredientR2dbcRepository;
+    private IngredientR2dbcRepository ingredientR2dbcRepository;
     @Autowired
     public IngredientRepositoryImpl(final IngredientR2dbcRepository ingredientR2dbcRepository){
         this.ingredientR2dbcRepository = ingredientR2dbcRepository;
     }
     @Override
-    public Mono<IngredientModel> add(IngredientModel ingredientModel) {
-        return ingredientR2dbcRepository.save(ingredientModel);
+    public Mono<Ingredient> add(Ingredient ingredient) {
+        return ingredientR2dbcRepository.save(ingredient);
+    }
+    @Override
+    public Mono<Ingredient> findById(UUID id) {
+        return ingredientR2dbcRepository.findById(id);
+    }
+    @Override
+    public Mono<Ingredient> update(Ingredient ingredient) {
+        return ingredientR2dbcRepository.save(ingredient);
+    }
+    @Override
+    public Flux<Ingredient> getAll() {
+        return ingredientR2dbcRepository.findAll();
+    }
+    @Override
+    public Mono<Void> delete(Ingredient ingredient) {
+        return ingredientR2dbcRepository.delete(ingredient);
     }
     
 }

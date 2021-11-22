@@ -8,6 +8,7 @@ import com.pizzeria.pizzeria.domain.ingredientDomain.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javassist.NotFoundException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -38,5 +39,7 @@ public class IngredientRepositoryImpl implements IngredientRepository {
     public Mono<Void> delete(Ingredient ingredient) {
         return ingredientR2dbcRepository.delete(ingredient);
     }
-    
+    public Mono<Void> doSomething(UUID id) {
+        return ingredientR2dbcRepository.findById(id).flatMap(foundIngredient -> Mono.error(new NotFoundException("Cara culo: " + foundIngredient)));
+    }
 }

@@ -25,6 +25,5 @@ public @Getter @Setter class CreateUserDto {
     private String email;
     @NotBlank
     private String password;
-    @NotBlank
-    private String token;
+    private String type;
 }

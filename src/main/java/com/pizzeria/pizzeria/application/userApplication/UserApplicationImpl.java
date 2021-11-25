@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import javassist.NotFoundException;
 import reactor.core.publisher.Mono;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 @Service
 public class UserApplicationImpl extends ApplicationBase<User, UUID> implements UserApplication {
     private UserRepository userRepository;
@@ -28,6 +30,7 @@ public class UserApplicationImpl extends ApplicationBase<User, UUID> implements 
     public Mono<UserDto> add(CreateUserDto createUserDto) {
         User user = modelMapper.map(createUserDto, User.class);
         user.setId(UUID.randomUUID());
+        user.setPassword(BCrypt.hashpw(createUserDto.getPassword(), BCrypt.gensalt()));
         user.setThisNew(true);
         return user
             .<String, User>validate(userRepository::findByEmail, user.getEmail())

@@ -10,6 +10,7 @@ import com.pizzeria.pizzeria.domain.userDomain.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.mindrot.jbcrypt.BCrypt;
 
 import javassist.NotFoundException;
 import reactor.core.publisher.Flux;
@@ -29,6 +30,7 @@ public class UserApplicationImpl extends ApplicationBase<User, UUID> implements 
     public Mono<UserDto> add(CreateOrUpdateUserDto createOrUpdateUserDto) {
         User user = modelMapper.map(createOrUpdateUserDto, User.class);
         user.setId(UUID.randomUUID());
+        user.setPassword(BCrypt.hashpw(createOrUpdateUserDto.getPassword(), BCrypt.gensalt()));
         user.setThisNew(true);
         return user
             .<String, User>validate(userRepository::findByEmail, user.getEmail())

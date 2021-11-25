@@ -28,11 +28,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-
-
-
 @RestController
 @RequestMapping("/v2/users")
 public class UserController {
@@ -47,31 +42,12 @@ public class UserController {
     }
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<UserDto> create(@Valid @RequestBody CreateUserDto userDtoIn) {
-        Mono<UserDto> userDto = this.userApplication.add(userDtoIn);
-        return userDto.flatMap( user -> {
-            user.setType("Bearer");
-            user.setToken(getJWTToken(user.getName()));
-            return userApplication.add(userDtoIn);
-        });
+    public Mono<UserDto> create(@Valid @RequestBody CreateUserDto createUserDto) {
+        return this.userApplication.add(createUserDto);
     }
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Mono<Void> update(@PathVariable UUID id, @RequestBody CreateUserDto UserDtoIn) {
         return userApplication.update(id, UserDtoIn);
     }
-    private String getJWTToken(String firstname) {
-        String secretKey = "mySecretKey";
-        
-        String token = Jwts
-          .builder()
-          .setId("softtekJWT")
-          .setSubject(firstname)      
-          .setIssuedAt(new Date(System.currentTimeMillis()))
-          .setExpiration(new Date(System.currentTimeMillis() + 3600000))
-          .signWith(SignatureAlgorithm.HS512,
-            secretKey.getBytes()).compact();
-      
-        return token;
-       }
 }

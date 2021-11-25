@@ -1,5 +1,7 @@
 package com.pizzeria.pizzeria.application.userApplication;
+
 import java.util.UUID;
+import java.util.Date;
 
 import com.pizzeria.pizzeria.core.ApplicationBase;
 import com.pizzeria.pizzeria.core.exceptions.BadRequestException;
@@ -15,6 +17,9 @@ import javassist.NotFoundException;
 import reactor.core.publisher.Mono;
 
 import org.mindrot.jbcrypt.BCrypt;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class UserApplicationImpl extends ApplicationBase<User, UUID> implements UserApplication {
@@ -32,6 +37,9 @@ public class UserApplicationImpl extends ApplicationBase<User, UUID> implements 
         user.setId(UUID.randomUUID());
         user.setPassword(BCrypt.hashpw(createUserDto.getPassword(), BCrypt.gensalt()));
         user.setThisNew(true);
+        //TODO validar email
+        createUserDto.setType("Bearer");
+        createUserDto.setToken(getJWTToken(user.getName()));
         return user
             .<String, User>validate(userRepository::findByEmail, user.getEmail())
             .then(
@@ -53,4 +61,18 @@ public class UserApplicationImpl extends ApplicationBase<User, UUID> implements 
                 userRepository.update(user)
             );
     }
+    private String getJWTToken(String firstname) {
+        String secretKey = "mySecretKey";
+        
+        String token = Jwts
+          .builder()
+          .setId("softtekJWT")
+          .setSubject(firstname)      
+          .setIssuedAt(new Date(System.currentTimeMillis()))
+          .setExpiration(new Date(System.currentTimeMillis() + 3600000))
+          .signWith(SignatureAlgorithm.HS512,
+            secretKey.getBytes()).compact();
+      
+        return token;
+       }
 }

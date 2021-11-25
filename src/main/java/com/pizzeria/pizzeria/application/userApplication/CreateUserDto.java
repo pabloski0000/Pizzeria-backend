@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 import org.springframework.validation.annotation.Validated;
 
 @Validated
-public @Getter @Setter class CreateOrUpdateUserDto {
+public @Getter @Setter class CreateUserDto {
     @NotBlank
     @Size(max = 15)
     private String name;

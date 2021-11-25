@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
-import com.pizzeria.pizzeria.application.userApplication.CreateOrUpdateUserDto;
+import com.pizzeria.pizzeria.application.userApplication.CreateUserDto;
 import com.pizzeria.pizzeria.application.userApplication.UserApplication;
 import com.pizzeria.pizzeria.application.userApplication.UserDto;
 import com.pizzeria.pizzeria.domain.userDomain.UserProjection;
@@ -42,12 +42,12 @@ public class UserController {
     }
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<UserDto> create(@Valid @RequestBody CreateOrUpdateUserDto UserDtoIn) {
+    public Mono<UserDto> create(@Valid @RequestBody CreateUserDto UserDtoIn) {
         return userApplication.add(UserDtoIn);
     }
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Mono<Void> update(@PathVariable UUID id, @RequestBody CreateOrUpdateUserDto UserDtoIn) {
+    public Mono<Void> update(@PathVariable UUID id, @RequestBody CreateUserDto UserDtoIn) {
         return userApplication.update(id, UserDtoIn);
     }
 }

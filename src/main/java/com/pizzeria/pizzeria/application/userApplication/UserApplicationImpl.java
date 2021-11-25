@@ -26,8 +26,8 @@ public class UserApplicationImpl extends ApplicationBase<User, UUID> implements 
         this.modelMapper = modelMapper;
     }
     @Override
-    public Mono<UserDto> add(CreateOrUpdateUserDto createOrUpdateUserDto) {
-        User user = modelMapper.map(createOrUpdateUserDto, User.class);
+    public Mono<UserDto> add(CreateUserDto createUserDto) {
+        User user = modelMapper.map(createUserDto, User.class);
         user.setId(UUID.randomUUID());
         user.setThisNew(true);
         return user
@@ -43,7 +43,7 @@ public class UserApplicationImpl extends ApplicationBase<User, UUID> implements 
             .map(User -> modelMapper.map(User, UserDto.class));
     }
     @Override
-    public Mono<Void> update(UUID id, CreateOrUpdateUserDto createOrUpdateUserDto) {
+    public Mono<Void> update(UUID id, CreateUserDto createOrUpdateUserDto) {
         User user = modelMapper.map(createOrUpdateUserDto, User.class);
         user.setId(id);
         return findById(id)

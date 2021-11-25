@@ -7,6 +7,7 @@ import com.pizzeria.pizzeria.domain.imageDomain.Image;
 import com.pizzeria.pizzeria.domain.imageDomain.ImageRepository;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import reactor.core.publisher.Mono;
@@ -21,6 +22,12 @@ public class ImageApplicationImp extends ApplicationBase<Image, UUID> implements
     private final ModelMapper modelMapper;
     
 
+    @Autowired
+    public ImageApplicationImp(final ImageRepository imageRepository,final ModelMapper modelMapper){
+        super((id) -> imageRepository.get(id));
+        this.imageRepository = imageRepository;
+        this.modelMapper = modelMapper;
+    }
 
     public Mono<ImageDTO> add(CreateOrUpdateImageDTO dto){
        Image image = modelMapper.map(dto, Image.class);
@@ -30,39 +37,8 @@ public class ImageApplicationImp extends ApplicationBase<Image, UUID> implements
        .flatMap(monoImage -> Mono.just(this.modelMapper.map(monoImage, ImageDTO.classs)));
     }
 
-
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((imageRepository == null) ? 0 : imageRepository.hashCode());
-        result = prime * result + ((modelMapper == null) ? 0 : modelMapper.hashCode());
-        return result;
-    }
-
-
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        ImageApplicationImp other = (ImageApplicationImp) obj;
-        if (imageRepository == null) {
-            if (other.imageRepository != null)
-                return false;
-        } else if (!imageRepository.equals(other.imageRepository))
-            return false;
-        if (modelMapper == null) {
-            if (other.modelMapper != null)
-                return false;
-        } else if (!modelMapper.equals(other.modelMapper))
-            return false;
-        return true;
+    public BytesDTO get(UUID id){
+        BytesDTO bytesDTO = modelMapper.map(this.findById(id), BytesDTO.class);
     }
 
     

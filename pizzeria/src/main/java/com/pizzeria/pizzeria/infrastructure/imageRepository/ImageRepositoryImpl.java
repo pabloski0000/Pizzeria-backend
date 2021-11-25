@@ -1,5 +1,6 @@
 package com.pizzeria.pizzeria.infrastructure.imageRepository;
 
+import java.time.Duration;
 import java.util.UUID;
 
 import com.pizzeria.pizzeria.domain.imageDomain.Image;
@@ -19,19 +20,14 @@ public class ImageRepositoryImpl implements ImageRepository {
         this.imageReactiveRedisRepository = imageReactiveRedisRepository;
     }
     @Override
-    public Mono<Void> add(Image image) {
-        // TODO Auto-generated method stub
-        return null;
+    public Mono<Boolean> add(Image image) {
+        return imageReactiveRedisRepository
+            .opsForValue()
+            .set(image.getId().toString(), image.getContent(), Duration.ofDays(1));
     }
     @Override
-    public Mono<Image> findById(UUID id) {
-        return imageReactiveRedisRepository.opsForValue().get(id)
-            .map(contentImage -> {
-                Image image = new Image();
-                image.setId(id);
-                image.setContent(contentImage);
-                return image;
-            });
+    public Mono<byte[]> findById(UUID id) {
+        return imageReactiveRedisRepository.opsForValue().get(id.toString());
     }
     
 }

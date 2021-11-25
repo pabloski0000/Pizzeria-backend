@@ -16,7 +16,7 @@ public class PizzeriaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PizzeriaApplication.class, args);
-		RedisClient redisClient = RedisClient.create("redis://Pablo:passworD1!@localhost:6379/1617124");
+		/*RedisClient redisClient = RedisClient.create("redis://Pablo:passworD1!@localhost:6379/1617124");
 		StatefulRedisConnection<String, String> connection = redisClient.connect();
 		RedisCommands<String, String> syncCommands = connection.sync();
 		RedisAsyncCommands<String, String> asyncCommands = connection.async();
@@ -24,7 +24,7 @@ public class PizzeriaApplication {
 		String responseRedis = syncCommands.set("key", "Hello, Redis!");
 		System.out.println(responseRedis);
 		connection.close();
-		redisClient.shutdown();
+		redisClient.shutdown();*/
 	}
 
 }

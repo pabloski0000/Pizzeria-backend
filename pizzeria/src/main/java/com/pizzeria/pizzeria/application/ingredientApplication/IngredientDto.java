@@ -1,4 +1,4 @@
-package com.pizzeria.pizzeria.application.ingredient;
+package com.pizzeria.pizzeria.application.ingredientApplication;
 
 import java.math.BigDecimal;
 import java.util.UUID;

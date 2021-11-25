@@ -1,4 +1,4 @@
-package com.pizzeria.pizzeria.infrastructure.ingredient;
+package com.pizzeria.pizzeria.infrastructure.ingredientRepository;
 
 import java.util.UUID;
 

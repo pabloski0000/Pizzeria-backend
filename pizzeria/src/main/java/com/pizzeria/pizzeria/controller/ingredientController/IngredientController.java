@@ -1,10 +1,10 @@
-package com.pizzeria.pizzeria.controller.ingredient;
+package com.pizzeria.pizzeria.controller.ingredientController;
 
 import java.util.UUID;
 
-import com.pizzeria.pizzeria.application.ingredient.IngredientApplication;
-import com.pizzeria.pizzeria.application.ingredient.CreateOrUpdateIngredientDto;
-import com.pizzeria.pizzeria.application.ingredient.IngredientDto;
+import com.pizzeria.pizzeria.application.ingredientApplication.CreateOrUpdateIngredientDto;
+import com.pizzeria.pizzeria.application.ingredientApplication.IngredientApplication;
+import com.pizzeria.pizzeria.application.ingredientApplication.IngredientDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;

@@ -1,9 +1,10 @@
 package com.pizzeria.pizzeria.infrastructure.userRepository;
 
+
 import java.util.UUID;
 
-import com.pizzeria.pizzeria.domain.userDomain.UserRepository;
 import com.pizzeria.pizzeria.domain.userDomain.User;
+import com.pizzeria.pizzeria.domain.userDomain.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,10 +13,10 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
-public class UserR2dbcRepositoryImpl implements UserRepository {
+public class UserRepositoryImpl implements UserRepository {
     private UserR2dbcRepository userR2dbcRepository;
     @Autowired
-    public UserR2dbcRepositoryImpl(final UserR2dbcRepository userR2dbcRepository){
+    public UserRepositoryImpl(final UserR2dbcRepository userR2dbcRepository){
         this.userR2dbcRepository = userR2dbcRepository;
     }
     @Override
@@ -27,12 +28,8 @@ public class UserR2dbcRepositoryImpl implements UserRepository {
         return userR2dbcRepository.findById(id);
     }
     @Override
-    public Mono<User> update(User user) {
-        return userR2dbcRepository.save(user);
-    }
-    @Override
-    public Flux<User> getAll() {
-        return userR2dbcRepository.findAll();
+    public Mono<Void> update(User user) {
+        return userR2dbcRepository.save(user).then();
     }
     @Override
     public Flux<User> findByName(String name) {
@@ -42,4 +39,8 @@ public class UserR2dbcRepositoryImpl implements UserRepository {
     public Flux<User> findByEmail(String email) {
         return userR2dbcRepository.findByEmail(email);
     }
+    /*@Override
+    public Flux<UserProjection> findByCriteria(String name, int size, int page) {
+        return userR2dbcRepository.findByCriteria(name, size, page);
+    }*/
 }

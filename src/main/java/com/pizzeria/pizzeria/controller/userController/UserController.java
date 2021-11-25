@@ -1,6 +1,7 @@
 package com.pizzeria.pizzeria.controller.userController;
 
 import java.util.UUID;
+import java.util.Date;
 
 import javax.validation.Valid;
 
@@ -26,7 +27,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
 
 
 @RestController
@@ -56,4 +60,18 @@ public class UserController {
     public Mono<Void> update(@PathVariable UUID id, @RequestBody CreateUserDto UserDtoIn) {
         return userApplication.update(id, UserDtoIn);
     }
+    private String getJWTToken(String firstname) {
+        String secretKey = "mySecretKey";
+        
+        String token = Jwts
+          .builder()
+          .setId("softtekJWT")
+          .setSubject(firstname)      
+          .setIssuedAt(new Date(System.currentTimeMillis()))
+          .setExpiration(new Date(System.currentTimeMillis() + 3600000))
+          .signWith(SignatureAlgorithm.HS512,
+            secretKey.getBytes()).compact();
+      
+        return token;
+       }
 }

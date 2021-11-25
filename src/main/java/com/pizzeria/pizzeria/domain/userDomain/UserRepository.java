@@ -7,12 +7,11 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@Repository
-public interface UserRepository  {
-    Flux<User> getAll();
-    Mono<User> add(User User);
+public interface UserRepository {
+    Mono<User> add(User user);
     Mono<User> findById(UUID id);
     Flux<User> findByName(String name);
-    Flux<User> findByEmail(String name);
-    Mono<User> update(User User);
+    Flux<User> findByEmail(String email);
+    //Flux<UserProjection> findByCriteria(String name, int size, int page);
+    Mono<Void> update(User User);
 }

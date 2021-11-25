@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import io.jsonwebtoken.Jwts;
 
 
 @RestController
@@ -42,8 +43,13 @@ public class UserController {
     }
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<UserDto> create(@Valid @RequestBody CreateUserDto UserDtoIn) {
-        return userApplication.add(UserDtoIn);
+    public Mono<UserDto> create(@Valid @RequestBody CreateUserDto userDtoIn) {
+        Mono<UserDto> userDto = this.userApplication.add(userDtoIn);
+        return userDto.flatMap( user -> {
+            user.setType("Bearer");
+            user.setToken(getJWTToken(user.getName()));
+            return userApplication.add(userDtoIn);
+        });
     }
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
     @ResponseStatus(HttpStatus.OK)

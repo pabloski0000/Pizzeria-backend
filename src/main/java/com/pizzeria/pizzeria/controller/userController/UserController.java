@@ -6,13 +6,15 @@ import javax.validation.Valid;
 
 import com.pizzeria.pizzeria.application.userApplication.CreateOrUpdateUserDto;
 import com.pizzeria.pizzeria.application.userApplication.UserApplication;
-import com.pizzeria.pizzeria.application.userApplication.UserDTO;
+import com.pizzeria.pizzeria.application.userApplication.UserDto;
+import com.pizzeria.pizzeria.domain.userDomain.UserProjection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,21 +36,26 @@ public class UserController {
     public UserController(final UserApplication userApplication){
         this.userApplication = userApplication;
     }
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public Flux<UserDTO> show() {
-        return userApplication.getAll();
-    }
+    /*@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public Flux<UserProjection> show(
+        @RequestParam(required = false) String name,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "0") int page
+        ) {
+        return userApplication.getByCriteria(name, size, page);
+    }*/
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
-    public Mono<UserDTO> read(@PathVariable UUID id) {
+    public Mono<UserDto> read(@PathVariable UUID id) {
         return userApplication.get(id);
     }
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<UserDTO> create(@Valid @RequestBody CreateOrUpdateUserDto userDtoIn) {
-        return userApplication.add(userDtoIn);
+    public Mono<UserDto> create(@Valid @RequestBody CreateOrUpdateUserDto UserDtoIn) {
+        return userApplication.add(UserDtoIn);
     }
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
-    public Mono<UserDTO> update(@PathVariable UUID id, @RequestBody CreateOrUpdateUserDto userDtoIn) {
-        return userApplication.update(id, userDtoIn);
+    @ResponseStatus(HttpStatus.OK)
+    public Mono<Void> update(@PathVariable UUID id, @RequestBody CreateOrUpdateUserDto UserDtoIn) {
+        return userApplication.update(id, UserDtoIn);
     }
 }

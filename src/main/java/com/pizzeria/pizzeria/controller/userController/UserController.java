@@ -36,14 +36,6 @@ public class UserController {
     public UserController(final UserApplication userApplication){
         this.userApplication = userApplication;
     }
-    /*@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public Flux<UserProjection> show(
-        @RequestParam(required = false) String name,
-        @RequestParam(defaultValue = "10") int size,
-        @RequestParam(defaultValue = "0") int page
-        ) {
-        return userApplication.getByCriteria(name, size, page);
-    }*/
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
     public Mono<UserDto> read(@PathVariable UUID id) {
         return userApplication.get(id);

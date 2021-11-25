@@ -12,6 +12,5 @@ public interface UserRepository {
     Mono<User> findById(UUID id);
     Flux<User> findByName(String name);
     Flux<User> findByEmail(String email);
-    //Flux<UserProjection> findByCriteria(String name, int size, int page);
     Mono<Void> update(User User);
 }

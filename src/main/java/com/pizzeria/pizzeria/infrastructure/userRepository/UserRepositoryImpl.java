@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.pizzeria.pizzeria.domain.userDomain.User;
 import com.pizzeria.pizzeria.domain.userDomain.UserRepository;
+import com.pizzeria.pizzeria.domain.userDomain.UserProjection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -39,8 +40,4 @@ public class UserRepositoryImpl implements UserRepository {
     public Flux<User> findByEmail(String email) {
         return userR2dbcRepository.findByEmail(email);
     }
-    /*@Override
-    public Flux<UserProjection> findByCriteria(String name, int size, int page) {
-        return userR2dbcRepository.findByCriteria(name, size, page);
-    }*/
 }

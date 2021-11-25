@@ -51,8 +51,4 @@ public class UserApplicationImpl extends ApplicationBase<User, UUID> implements 
                 userRepository.update(user)
             );
     }
-    /*@Override
-    public Flux<UserProjection> getByCriteria(String name, int size, int page) {
-        return UserRepository.findByCriteria(name, size, page);
-    }*/
 }

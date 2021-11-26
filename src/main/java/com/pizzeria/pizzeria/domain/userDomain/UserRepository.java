@@ -2,8 +2,6 @@ package com.pizzeria.pizzeria.domain.userDomain;
 
 import java.util.UUID;
 
-import org.springframework.stereotype.Repository;
-
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

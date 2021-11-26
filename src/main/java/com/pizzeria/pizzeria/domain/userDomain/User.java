@@ -1,7 +1,6 @@
 package com.pizzeria.pizzeria.domain.userDomain;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.pizzeria.pizzeria.core.EntityBase;

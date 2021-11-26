@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import com.pizzeria.pizzeria.domain.userDomain.User;
 import com.pizzeria.pizzeria.domain.userDomain.UserRepository;
-import com.pizzeria.pizzeria.domain.userDomain.UserProjection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

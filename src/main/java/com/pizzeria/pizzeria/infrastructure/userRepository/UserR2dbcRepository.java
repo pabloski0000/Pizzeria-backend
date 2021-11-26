@@ -3,7 +3,6 @@ package com.pizzeria.pizzeria.infrastructure.userRepository;
 import java.util.UUID;
 
 import com.pizzeria.pizzeria.domain.userDomain.User;
-import com.pizzeria.pizzeria.domain.userDomain.UserProjection;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;

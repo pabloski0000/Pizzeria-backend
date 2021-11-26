@@ -1,12 +1,13 @@
 package com.pizzeria.pizzeria.core.ConfigurationBeans;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.UUID;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-public class JWTgenerator {
+public class JWTUtils {
+
     public static String getJWTToken(UUID userId) {
         String secretKey = "mySecretKey";
         String token = Jwts
@@ -17,5 +18,6 @@ public class JWTgenerator {
           .signWith(SignatureAlgorithm.HS512,
             secretKey.getBytes()).compact();
         return token;
-       }
+    }
+    
 }

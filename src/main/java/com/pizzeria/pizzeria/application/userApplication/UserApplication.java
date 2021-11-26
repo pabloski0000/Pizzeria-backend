@@ -8,7 +8,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface UserApplication {
-    Mono<UserDto> add(CreateUserDto createUserDto);
+    Mono<UserOutDto> add(CreateUserDto createUserDto);
     Mono<UserDto> get(UUID id);
     Mono<Void> update(UUID id, CreateUserDto createUserDto);
 }

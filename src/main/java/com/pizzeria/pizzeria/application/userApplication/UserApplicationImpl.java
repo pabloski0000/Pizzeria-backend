@@ -32,20 +32,17 @@ public class UserApplicationImpl extends ApplicationBase<User, UUID> implements 
         this.modelMapper = modelMapper;
     }
     @Override
-    public Mono<UserDto> add(CreateUserDto createUserDto) {
+    public Mono<UserOutDto> add(CreateUserDto createUserDto) {
         User user = modelMapper.map(createUserDto, User.class);
         user.setId(UUID.randomUUID());
-        user.setPassword(BCrypt.hashpw(createUserDto.getPassword(), BCrypt.gensalt()));
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         user.setThisNew(true);
         //TODO validar email
-        createUserDto.setType("Bearer");
-        createUserDto.setToken(getJWTToken(user.getName()));
-        return user
-            .<String, User>validate(userRepository::findByEmail, user.getEmail())
-            .then(
-                userRepository.add(user)
-                .map(createdUser -> modelMapper.map(createdUser, UserDto.class))
-            );
+        UserOutDto userDto = this.modelMapper.map(user, UserOutDto.class);
+        userDto.setType("Bearer");
+        userDto.setToken(getJWTToken(user.getName()));
+        return userRepository.add(user).then(Mono.just(userDto));
+            //.<String, User>validate(userRepository::findByEmail, user.getEmail())
     }
     @Override
     public Mono<UserDto> get(UUID id) {
@@ -60,6 +57,7 @@ public class UserApplicationImpl extends ApplicationBase<User, UUID> implements 
             .then(
                 userRepository.update(user)
             );
+
     }
     private String getJWTToken(String firstname) {
         String secretKey = "mySecretKey";

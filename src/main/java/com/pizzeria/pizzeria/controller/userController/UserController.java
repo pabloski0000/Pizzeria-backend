@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import com.pizzeria.pizzeria.application.userApplication.CreateUserDto;
 import com.pizzeria.pizzeria.application.userApplication.UserApplication;
 import com.pizzeria.pizzeria.application.userApplication.UserDto;
+import com.pizzeria.pizzeria.application.userApplication.UserOutDto;
 import com.pizzeria.pizzeria.domain.userDomain.UserProjection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class UserController {
     }
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<UserDto> create(@Valid @RequestBody CreateUserDto createUserDto) {
+    public Mono<UserOutDto> create(@Valid @RequestBody CreateUserDto createUserDto) {
         return this.userApplication.add(createUserDto);
     }
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")

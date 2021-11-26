@@ -35,6 +35,7 @@ public class UserApplicationImpl extends ApplicationBase<User, UUID> implements 
         UserOutDto userDto = this.modelMapper.map(user, UserOutDto.class);
         userDto.setType("Bearer");
         userDto.setToken(JWTUtils.getJWTToken(user.getId()));
+        //userDto.setDecodedToken(JWTUtils.decodeJWT((userDto.getToken())));
         return userRepository.add(user).then(Mono.just(userDto));
             //.<String, User>validate(userRepository::findByEmail, user.getEmail())
     }

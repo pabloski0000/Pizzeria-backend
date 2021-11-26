@@ -3,6 +3,9 @@ package com.pizzeria.pizzeria.core.ConfigurationBeans;
 import java.sql.Date;
 import java.util.UUID;
 
+import javax.xml.bind.DatatypeConverter;
+
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -19,5 +22,4 @@ public class JWTUtils {
             secretKey.getBytes()).compact();
         return token;
     }
-    
 }

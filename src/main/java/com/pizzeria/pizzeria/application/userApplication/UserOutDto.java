@@ -6,6 +6,6 @@ import lombok.Setter;
 public @Getter @Setter class UserOutDto {
     private String type;
     private String token;
-    private String expired = "3600";
+    private String expireSeconds = "3600";
     private String refreshToken;
 }

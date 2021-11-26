@@ -40,7 +40,7 @@ public class UserApplicationImpl extends ApplicationBase<User, UUID> implements 
         //TODO validar email
         UserOutDto userDto = this.modelMapper.map(user, UserOutDto.class);
         userDto.setType("Bearer");
-        userDto.setToken(getJWTToken(user.getName()));
+        userDto.setToken(getJWTToken(user.getId()));
         return userRepository.add(user).then(Mono.just(userDto));
             //.<String, User>validate(userRepository::findByEmail, user.getEmail())
     }
@@ -59,18 +59,15 @@ public class UserApplicationImpl extends ApplicationBase<User, UUID> implements 
             );
 
     }
-    private String getJWTToken(String firstname) {
+    private String getJWTToken(UUID userId) {
         String secretKey = "mySecretKey";
-        
         String token = Jwts
           .builder()
-          .setId("softtekJWT")
-          .setSubject(firstname)      
+          .setId("userId")      
           .setIssuedAt(new Date(System.currentTimeMillis()))
           .setExpiration(new Date(System.currentTimeMillis() + 3600000))
           .signWith(SignatureAlgorithm.HS512,
             secretKey.getBytes()).compact();
-      
         return token;
        }
 }

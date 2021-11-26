@@ -8,6 +8,7 @@ import com.pizzeria.pizzeria.core.exceptions.BadRequestException;
 import com.pizzeria.pizzeria.domain.userDomain.User;
 import com.pizzeria.pizzeria.domain.userDomain.UserProjection;
 import com.pizzeria.pizzeria.domain.userDomain.UserRepository;
+import com.pizzeria.pizzeria.core.ConfigurationBeans.JWTgenerator;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class UserApplicationImpl extends ApplicationBase<User, UUID> implements 
         //TODO validar email
         UserOutDto userDto = this.modelMapper.map(user, UserOutDto.class);
         userDto.setType("Bearer");
-        userDto.setToken(getJWTToken(user.getId()));
+        userDto.setToken(JWTgenerator.getJWTToken(user.getId()));
         return userRepository.add(user).then(Mono.just(userDto));
             //.<String, User>validate(userRepository::findByEmail, user.getEmail())
     }
@@ -57,17 +58,5 @@ public class UserApplicationImpl extends ApplicationBase<User, UUID> implements 
             .then(
                 userRepository.update(user)
             );
-
     }
-    private String getJWTToken(UUID userId) {
-        String secretKey = "mySecretKey";
-        String token = Jwts
-          .builder()
-          .setId("userId")      
-          .setIssuedAt(new Date(System.currentTimeMillis()))
-          .setExpiration(new Date(System.currentTimeMillis() + 3600000))
-          .signWith(SignatureAlgorithm.HS512,
-            secretKey.getBytes()).compact();
-        return token;
-       }
 }

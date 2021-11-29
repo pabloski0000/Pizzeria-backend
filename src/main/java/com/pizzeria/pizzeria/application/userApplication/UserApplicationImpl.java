@@ -6,6 +6,7 @@ import com.pizzeria.pizzeria.core.ApplicationBase;
 import com.pizzeria.pizzeria.domain.userDomain.User;
 import com.pizzeria.pizzeria.domain.userDomain.UserRepository;
 import com.pizzeria.pizzeria.core.ConfigurationBeans.JWTUtils;
+import com.pizzeria.pizzeria.core.ConfigurationBeans.NanoIdUtils;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class UserApplicationImpl extends ApplicationBase<User, UUID> implements 
         UserOutDto userOutDto = this.modelMapper.map(user, UserOutDto.class);
         userOutDto.setType("Bearer");
         userOutDto.setToken(JWTUtils.getJWTToken(user.getId()));
+        userOutDto.setRefreshToken(NanoIdUtils.randomNanoId());
         return userRepository.add(user).then(Mono.just(userOutDto));
     }
     @Override

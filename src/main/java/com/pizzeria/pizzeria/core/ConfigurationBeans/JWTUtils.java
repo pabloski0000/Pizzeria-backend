@@ -7,10 +7,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 public class JWTUtils {
-
     public static String getJWTToken(UUID userId) {
-
-        String secretKey = "mySecretKey";
+        String secretKey = System.getenv("Key");
         String token = Jwts
           .builder()
           .setId(userId.toString())      

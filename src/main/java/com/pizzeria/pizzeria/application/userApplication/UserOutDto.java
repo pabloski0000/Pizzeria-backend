@@ -8,5 +8,4 @@ public @Getter @Setter class UserOutDto {
     private String token;
     private String expireSeconds = "3600";
     private String refreshToken;
-    //private Claim decodedToken;
 }

@@ -32,12 +32,10 @@ public class UserApplicationImpl extends ApplicationBase<User, UUID> implements 
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         user.setThisNew(true);
         //TODO validar email
-        UserOutDto userDto = this.modelMapper.map(user, UserOutDto.class);
-        userDto.setType("Bearer");
-        userDto.setToken(JWTUtils.getJWTToken(user.getId()));
-        //userDto.setDecodedToken(JWTUtils.decodeJWT((userDto.getToken())));
-        return userRepository.add(user).then(Mono.just(userDto));
-            //.<String, User>validate(userRepository::findByEmail, user.getEmail())
+        UserOutDto userOutDto = this.modelMapper.map(user, UserOutDto.class);
+        userOutDto.setType("Bearer");
+        userOutDto.setToken(JWTUtils.getJWTToken(user.getId()));
+        return userRepository.add(user).then(Mono.just(userOutDto));
     }
     @Override
     public Mono<UserDto> get(UUID id) {

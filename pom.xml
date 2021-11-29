@@ -78,6 +78,12 @@
 			<artifactId>spring-data-redis</artifactId>
 			<version>2.5.4</version>
 		</dependency>
+			<!-- cloudinary -->
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http42</artifactId>
+			<version>1.1.3</version> 
+		</dependency>
 	</dependencies>
 
 	<build>

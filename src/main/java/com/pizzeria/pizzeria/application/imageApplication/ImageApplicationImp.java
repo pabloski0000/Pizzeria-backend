@@ -24,7 +24,6 @@ public class ImageApplicationImp implements ImageApplication{
         return imageRepository.add(image)
             .flatMap(added -> {
                 if(!added){
-                    //Look error code up
                     return Mono.error(new Exception("The image wasn't saved correctly: " + createOrUpdateImageDto.getContent().toString()));
                 }
                 return Mono.just(modelMapper.map(image, ImageDTO.class));

@@ -33,7 +33,7 @@ public class CustomConverters {
             return bb.array();
         }
     }
-    
+
     @ReadingConverter
     public class ByteArrayToUUIDConverter implements Converter<byte[], UUID> {
         @Override
@@ -45,4 +45,3 @@ public class CustomConverters {
         }
     }
 }
-

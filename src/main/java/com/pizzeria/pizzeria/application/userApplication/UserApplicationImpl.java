@@ -20,12 +20,14 @@ import org.mindrot.jbcrypt.BCrypt;
 public class UserApplicationImpl extends ApplicationBase<User, UUID> implements UserApplication {
     private UserRepository userRepository;
     private ModelMapper modelMapper;
+
     @Autowired
-    public UserApplicationImpl(UserRepository userRepository, ModelMapper modelMapper){
+    public UserApplicationImpl(UserRepository userRepository, ModelMapper modelMapper) {
         super(userRepository::findById);
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
     }
+
     @Override
     public Mono<UserOutDto> add(CreateUserDto createUserDto) {
         User user = modelMapper.map(createUserDto, User.class);
@@ -37,18 +39,19 @@ public class UserApplicationImpl extends ApplicationBase<User, UUID> implements 
         userOutDto.setRefreshToken(NanoIdUtils.randomNanoId());
         return userRepository.add(user).then(Mono.just(userOutDto));
     }
+
     @Override
     public Mono<UserDto> get(UUID id) {
         return findById(id)
-            .map(User -> modelMapper.map(User, UserDto.class));
+                .map(User -> modelMapper.map(User, UserDto.class));
     }
+
     @Override
     public Mono<Void> update(UUID id, CreateUserDto createOrUpdateUserDto) {
         User user = modelMapper.map(createOrUpdateUserDto, User.class);
         user.setId(id);
         return findById(id)
-            .then(
-                userRepository.update(user)
-            );
+                .then(
+                        userRepository.update(user));
     }
 }

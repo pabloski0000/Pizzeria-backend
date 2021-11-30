@@ -28,19 +28,23 @@ import org.springframework.http.MediaType;
 @RequestMapping("/v2/users")
 public class UserController {
     private final UserApplication userApplication;
+
     @Autowired
-    public UserController(final UserApplication userApplication){
+    public UserController(final UserApplication userApplication) {
         this.userApplication = userApplication;
     }
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
     public Mono<UserDto> read(@PathVariable UUID id) {
         return userApplication.get(id);
     }
+
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<UserOutDto> create(@Valid @RequestBody CreateUserDto createUserDto) {
         return this.userApplication.add(createUserDto);
     }
+
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Mono<Void> update(@PathVariable UUID id, @RequestBody CreateUserDto UserDtoIn) {

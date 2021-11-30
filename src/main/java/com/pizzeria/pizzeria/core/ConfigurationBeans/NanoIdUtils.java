@@ -10,8 +10,8 @@ public final class NanoIdUtils {
 
     public static final SecureRandom DEFAULT_NUMBER_GENERATOR = new SecureRandom();
 
-    public static final char[] DEFAULT_ALPHABET =
-            "_-0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+    public static final char[] DEFAULT_ALPHABET = "_-0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            .toCharArray();
 
     public static final int DEFAULT_SIZE = 21;
 

@@ -32,9 +32,7 @@ public class UserApplicationImpl extends ApplicationBase<User, UUID> implements 
         user.setId(UUID.randomUUID());
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         user.setThisNew(true);
-        //TODO validar email
         UserOutDto userOutDto = this.modelMapper.map(user, UserOutDto.class);
-        userOutDto.setType("Bearer");
         userOutDto.setToken(JWTUtils.getJWTToken(user.getId()));
         userOutDto.setRefreshToken(NanoIdUtils.randomNanoId());
         return userRepository.add(user).then(Mono.just(userOutDto));

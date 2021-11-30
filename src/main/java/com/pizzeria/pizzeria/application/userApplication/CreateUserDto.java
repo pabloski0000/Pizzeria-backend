@@ -3,6 +3,7 @@ package com.pizzeria.pizzeria.application.userApplication;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -10,16 +11,13 @@ import org.springframework.validation.annotation.Validated;
 
 @Validated
 public @Getter @Setter class CreateUserDto {
-    @NotBlank
-    @Size(max = 15)
+    @NotBlank @Size(min=8, max=16)
     private String name;
-    @NotBlank
-    @Size(max = 15)
+    @NotBlank @Size(min=8, max=16)
     private String lastName;
-    @NotBlank
-    @Size(max = 16)
+    @NotBlank @Size(min=8, max=16) @Email
     private String email;
-    @NotBlank
+    @NotBlank @Size(min=8, max=16)
     private String password;
     private String type;
     private String token;

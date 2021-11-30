@@ -2,6 +2,9 @@ package com.pizzeria.pizzeria.application.userApplication;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.databind.introspect.AccessorNamingStrategy.Provider;
+import com.pizzeria.pizzeria.domain.userDomain.Rol;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +13,8 @@ public @Getter @Setter class UserDto {
     private String name;
     private String lastName;
     private String email;
+    private Provider provider;
+    private Rol rol;
     private String type;
     private String accessToken;
 }

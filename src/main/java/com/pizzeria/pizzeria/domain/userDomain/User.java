@@ -28,4 +28,10 @@ public @Getter @Setter class User extends EntityBase {
     @Column
     @NotBlank
     private String password;
+    @Column
+    @NotBlank
+    private Rol rol = Rol.USER;
+    @Column
+    @NotBlank
+    private Provider provider;
 }

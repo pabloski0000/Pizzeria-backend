@@ -34,6 +34,7 @@ public class UserApplicationImpl extends ApplicationBase<User, UUID> implements 
         user.setId(UUID.randomUUID());
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         user.setThisNew(true);
+        user.setProvider("LOGIN");
         UserOutDto userOutDto = this.modelMapper.map(user, UserOutDto.class);
         userOutDto.setAccessToken(JWTUtils.getJWTToken(user.getId()));
         userOutDto.setRefreshToken(NanoIdUtils.randomNanoId());

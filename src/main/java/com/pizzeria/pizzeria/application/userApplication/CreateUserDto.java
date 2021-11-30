@@ -7,6 +7,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.pizzeria.pizzeria.domain.userDomain.Rol;
+
 import org.springframework.validation.annotation.Validated;
 
 @Validated
@@ -19,6 +21,8 @@ public @Getter @Setter class CreateUserDto {
     private String email;
     @NotBlank @Size(min=8, max=16)
     private String password;
+    private String provider;
+    private Rol rol = Rol.USER;
     private String type;
     private String accessToken;
 }

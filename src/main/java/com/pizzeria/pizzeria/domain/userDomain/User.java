@@ -33,5 +33,5 @@ public @Getter @Setter class User extends EntityBase {
     private Rol rol = Rol.USER;
     @Column
     @NotBlank
-    private Provider provider;
+    private String provider;
 }

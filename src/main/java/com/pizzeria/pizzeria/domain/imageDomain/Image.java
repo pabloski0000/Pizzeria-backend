@@ -14,9 +14,6 @@ public class Image extends EntityBase{
     @Column
     private byte[] content;
 
-    public void setContent(Image contentImageInBytes) {
-    }
-
 }
 
 

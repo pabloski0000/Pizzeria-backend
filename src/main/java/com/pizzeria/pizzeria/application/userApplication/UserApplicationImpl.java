@@ -33,7 +33,7 @@ public class UserApplicationImpl extends ApplicationBase<User, UUID> implements 
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         user.setThisNew(true);
         UserOutDto userOutDto = this.modelMapper.map(user, UserOutDto.class);
-        userOutDto.setToken(JWTUtils.getJWTToken(user.getId()));
+        userOutDto.setAccessToken(JWTUtils.getJWTToken(user.getId()));
         userOutDto.setRefreshToken(NanoIdUtils.randomNanoId());
         return userRepository.add(user).then(Mono.just(userOutDto));
     }

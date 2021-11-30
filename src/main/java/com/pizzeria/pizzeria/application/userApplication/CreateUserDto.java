@@ -11,14 +11,14 @@ import org.springframework.validation.annotation.Validated;
 
 @Validated
 public @Getter @Setter class CreateUserDto {
-    @NotBlank @Size(min=8, max=16)
+    @NotBlank @Size(min=1, max=20)
     private String name;
-    @NotBlank @Size(min=8, max=16)
+    @NotBlank @Size(min=1, max=20)
     private String lastName;
-    @NotBlank @Size(min=8, max=16) @Email
+    @NotBlank @Email
     private String email;
     @NotBlank @Size(min=8, max=16)
     private String password;
     private String type;
-    private String token;
+    private String accessToken;
 }

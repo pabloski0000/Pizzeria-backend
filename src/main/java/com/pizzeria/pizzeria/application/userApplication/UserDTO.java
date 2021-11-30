@@ -11,5 +11,5 @@ public @Getter @Setter class UserDto {
     private String lastName;
     private String email;
     private String type;
-    private String token;
+    private String accessToken;
 }

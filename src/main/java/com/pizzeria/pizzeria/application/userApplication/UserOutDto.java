@@ -5,7 +5,7 @@ import lombok.Setter;
 
 public @Getter @Setter class UserOutDto {
     private String type = "Bearer";
-    private String token;
+    private String accessToken;
     private String expireSeconds = "3600";
     private String refreshToken;
 }
